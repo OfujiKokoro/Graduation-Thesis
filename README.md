@@ -1,4 +1,4 @@
-# Graduation-Thesis-
+# Graduation-Thesis
 卒論コード
 MIT License
 
