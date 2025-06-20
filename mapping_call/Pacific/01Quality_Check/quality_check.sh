@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu  # Enable error handling: exit on error or undefined variable
+set -eu  
 
 # Define the directory containing FASTQ files (relative path)
 PACIFIC_DATA_DIR=../../../data/Pacific/fastqgz
