@@ -29,12 +29,12 @@ done
 echo "Fastq conversion completed."
 
 # Convert fastq files to bgzip format
+echo "Converting FASTQ files to BGZIP..."
 for fastq_file in $FASTQ_DIR/*.fastq; do
-    filename=$(basename -- "$fastq_file")
-    filename_without_extension="${filename%.*}"
-    bgzip_file="$BGZIP_DIR/$filename_without_extension.fastq.gz"
-    echo "Compressing $fastq_file to $bgzip_file"
-    bgzip -c $fastq_file > $bgzip_file
+  filename=$(basename "$fastq_file" .fastq)
+  bgzip_file="$BGZIP_DIR/${filename}.fastq.gz"
+  echo "Compressing $fastq_file to $bgzip_file"
+  bgzip -c $fastq_file > $bgzip_file
 done
 echo "Compression to bgzip completed."
 

@@ -24,3 +24,6 @@ for file in "$TARGET_DIR"/*; do
   mv "$file" "$TARGET_DIR/$newname"
 done
 
+# Build BWA index for the reference genome
+reference=data/GCF_015237465.2/Chelonia_mydas_GCF_015237465.2_rCheMyd1.pri.v2_genomic.fna
+bwa index "$reference"
