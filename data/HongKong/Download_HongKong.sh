@@ -10,7 +10,7 @@ MERGE_FASTQ_DIR="merge_fastqgz"
 mkdir -p $DOWNLOAD_DIR $FASTQ_DIR $BGZIP_DIR $MERGE_FASTQ_DIR
 
 # List of SRR files to download
-SRR_LIST="SRR_Acc_List_HongKong_test.txt"
+SRR_LIST="SRR_Acc_List_HongKong.txt"
 
 
 # Download SRR files from NCBI using SRA Toolkit and save them in DOWNLOAD_DIR
@@ -29,19 +29,22 @@ done
 echo "Fastq conversion completed."
 
 # Convert fastq files to bgzip format
-echo "Converting FASTQ files to BGZIP..."
 for fastq_file in $FASTQ_DIR/*.fastq; do
   filename=$(basename "$fastq_file" .fastq)
   bgzip_file="$BGZIP_DIR/${filename}.fastq.gz"
   echo "Compressing $fastq_file to $bgzip_file"
   bgzip -c $fastq_file > $bgzip_file
 done
+
 echo "Compression to bgzip completed."
 
 # 1. Create list of fastq.gz files for _1 reads and concatenate
-find $BGZIP_DIR -name '*_1.fastq.gz' > $MERGE_FASTQ_DIR/list_fastq_1_files.txt
-cat $MERGE_FASTQ_DIR/list_fastq_1_files.txt | xargs -n 1 -I{} zcat '{}' >> $MERGE_FASTQ_DIR/SRR446045_1.fastq.gz
+find "$BGZIP_DIR" -name '*_1.fastq.gz' | sort > "$MERGE_FASTQ_DIR/list_fastq_1_files.txt"
+echo "Merging all _1.fastq.gz files into SRR446045_merge_1.fastq.gz..."
+zcat $(cat "$MERGE_FASTQ_DIR/list_fastq_1_files.txt") | bgzip > "$MERGE_FASTQ_DIR/SRR446045_merge_1.fastq.gz"
 
 # 2. Create list of fastq.gz files for _2 reads and concatenate
-find $BGZIP_DIR -name '*_2.fastq.gz' > $MERGE_FASTQ_DIR/list_fastq_2_files.txt
-cat $MERGE_FASTQ_DIR/list_fastq_2_files.txt | xargs -n 1 -I{} zcat '{}' >> $MERGE_FASTQ_DIR/SRR446045_2.fastq.gz
+find "$BGZIP_DIR" -name '*_1.fastq.gz' | sort > "$MERGE_FASTQ_DIR/list_fastq_2s_files.txt"
+echo "Merging all _1.fastq.gz files into SRR446045_merge_2.fastq.gz..."
+zcat $(cat "$MERGE_FASTQ_DIR/list_fastq_1_files.txt") | bgzip > "$MERGE_FASTQ_DIR/SRR446045_merge_2.fastq.gz"
+
