@@ -14,7 +14,7 @@ BWA_DIR="bwa"
 STATS_DIR="stats"
 
 # Number of CPU cores to use
-CORE=15
+CORE=5
 
 # Create output directories if they do not exist
 mkdir -p "$SAM_DIR" "$BWA_DIR" "$STATS_DIR"

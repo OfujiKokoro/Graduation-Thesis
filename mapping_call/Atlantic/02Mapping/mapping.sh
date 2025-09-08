@@ -5,7 +5,7 @@ set -eu
 reference=../../../data/Reference/data/GCF_015237465.2/Chelonia_mydas_GCF_015237465.2_rCheMyd1.pri.v2_genomic.fna
 
 # Directory containing FASTQ files
-PACIFIC_DATA_DIR=../../../data/Atlantic/fastqgz
+PACIFIC_DATA_DIR=../01Qualiry_Control/trimmomatic/paired
 
 
 # Output directories
@@ -14,19 +14,19 @@ BWA_DIR="bwa"
 STATS_DIR="stats"
 
 # Number of CPU cores to use
-CORE=10
+CORE=5
 
 # Create output directories if they do not exist
 mkdir -p "$SAM_DIR" "$BWA_DIR" "$STATS_DIR"
 
 
 # Loop through each pair of FASTQ files for mapping and processing
-for fastq_file_1 in "$PACIFIC_DATA_DIR"/*_1.fastq.gz; do
+for fastq_file_1 in "$PACIFIC_DATA_DIR"/*_1.paired.fastq.gz; do
     # Extract the sample name from the file name
-    sample_name=$(basename "$fastq_file_1" _1.fastq.gz)
+    sample_name=$(basename "$fastq_file_1" _1.paired.fastq.gz)
     
     # Define the reverse read file
-    fastq_file_2="$PACIFIC_DATA_DIR/${sample_name}_2.fastq.gz"
+    fastq_file_2="$PACIFIC_DATA_DIR/${sample_name}_2.paired.fastq.gz"
     
     # Check if the reverse read file exists
     if [[ ! -f "$fastq_file_2" ]]; then

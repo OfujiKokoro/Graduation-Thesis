@@ -16,7 +16,7 @@ SRR_LIST="SRR_Acc_List_HongKong.txt"
 # Download SRR files from NCBI using SRA Toolkit and save them in DOWNLOAD_DIR
 while read -r SRR; do
     echo "Downloading $SRR..."
-    prefetch --max-size 50G "$SRR" -O "$DOWNLOAD_DIR"
+    prefetch --max-size 100G "$SRR" -O "$DOWNLOAD_DIR"
 done < "$SRR_LIST"
 
 echo "Download completed."
@@ -44,7 +44,7 @@ echo "Merging all _1.fastq.gz files into SRR446045_merge_1.fastq.gz..."
 zcat $(cat "$MERGE_FASTQ_DIR/list_fastq_1_files.txt") | bgzip > "$MERGE_FASTQ_DIR/SRR446045_merge_1.fastq.gz"
 
 # 2. Create list of fastq.gz files for _2 reads and concatenate
-find "$BGZIP_DIR" -name '*_1.fastq.gz' | sort > "$MERGE_FASTQ_DIR/list_fastq_2s_files.txt"
-echo "Merging all _1.fastq.gz files into SRR446045_merge_2.fastq.gz..."
-zcat $(cat "$MERGE_FASTQ_DIR/list_fastq_1_files.txt") | bgzip > "$MERGE_FASTQ_DIR/SRR446045_merge_2.fastq.gz"
+find "$BGZIP_DIR" -name '*_2.fastq.gz' | sort > "$MERGE_FASTQ_DIR/list_fastq_2_files.txt"
+echo "Merging all _2.fastq.gz files into SRR446045_merge_2.fastq.gz..."
+zcat $(cat "$MERGE_FASTQ_DIR/list_fastq_2_files.txt") | bgzip > "$MERGE_FASTQ_DIR/SRR446045_merge_2.fastq.gz"
 

@@ -36,7 +36,7 @@ for fastq_file_1 in "$HONGKONG_DATA_DIR"/*_1.fastq.gz; do
         "$trimmed_fastq_file_1" "$unpaired_fastq_file_1" \
         "$trimmed_fastq_file_2" "$unpaired_fastq_file_2" \
         ILLUMINACLIP:NexteraPE-PE.fa:2:30:10 \
-        LEADING:5 TRAILING:5 SLIDINGWINDOW:4:15 MINLEN:75
+        LEADING:5 TRAILING:5 SLIDINGWINDOW:4:15 MINLEN:30
 
     echo "Trimming $sample_name completed."
 done
